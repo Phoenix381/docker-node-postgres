@@ -41,6 +41,12 @@ loadBtn.addEventListener('click', () => {
     vertices = Array.from(vertices, (x) => { return {title: x} });
 
     drawGraph();
+
+    if(graph.length > 0 && vertices.length > 0) {
+        runBtn.disabled = false;
+    } else {
+        runBtn.disabled = true;
+    }
 });
 
 function clamp(x, lo, hi) {
@@ -59,9 +65,6 @@ function drawGraph() {
 
     const links = graph.map(d => ({...d}));
     const nodes = vertices.map(d => ({...d}));
-
-    console.log(links);
-    console.log(nodes);
 
     // Create a simulation with several forces.
     const simulation = d3.forceSimulation(nodes)
@@ -156,3 +159,22 @@ function drawGraph() {
         if (!event.active) simulation.alphaTarget(0);
     }
 }
+
+// Run button
+runBtn.addEventListener('click', () => {
+    console.log('sending data...');
+    console.log(vertices);
+    console.log(graph);
+
+    fetch('/api/run', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        // body: JSON.stringify({ vertices: vertices, edges: graph })
+        body: JSON.stringify({ vertices: vertices, graph: graph})
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+});
