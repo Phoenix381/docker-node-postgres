@@ -1,0 +1,30 @@
+
+body {
+    background: #FBFBFB;
+    overflow: hidden;
+}
+
+textarea {
+    height: 100%;
+    resize: none;
+    border-radius: 5px;
+    padding: 5px;
+    background: #FBFBFB;
+}
+
+.content {
+    height: 90vh;
+}
+
+.block {
+    background: #EEEEEE;
+    border-radius: 10px;
+    padding: 1em;
+
+    flex-grow: 1;
+    width: 100%;
+}
+
+.btn {
+    flex-grow: 1;
+}

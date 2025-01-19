@@ -3,11 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PL/pgSQL Web Server</title>
+    <title>Flow network editor</title>
+
+    <link href="3rd_party/bootstrap.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Welcome to the PL/pgSQL Web Server</h1>
-    <p>This is a simple web server with PL/pgSQL support.</p>
-    <p>You can access the JSON API at <a href="/api/data">/api/data</a>.</p>
+    <script src="3rd_party/bootstrap.js"></script>
+    <script src="3rd_party/d3.js"></script>
+
+    <div class="d-flex flex-column align-items-center px-4 py-4">
+        <h1>Flow network editor</h1>
+
+        <div class="d-flex w-100 content gap-2">
+            <div class="block w-50 d-flex flex-column gap-2">
+                <textarea id="graph-editor" placeholder="example: 1 2 1.1;2.2"></textarea>
+
+                <div class="d-flex justify-content-between gap-2">
+                    <button id="load-button" class="btn btn-primary">Load</button>
+                    <button id="run-button" class="btn btn-primary">Run</button>
+                </div>
+            </div>
+
+            <div id="graph-container" class="block">
+                <!-- graph drawing here -->
+            </div>
+
+            <div id="results-container" class="block w-50">
+                <!-- results here -->
+            </div>
+        </div>
+
+    <script src="graph.js" defer></script>
 </body>
 </html>
