@@ -21,10 +21,21 @@ loadBtn.addEventListener('click', () => {
     // parsing strings
     const rows = graphEditor.value.split('\n');
     for(let row of rows) {
-        const [a, b, c] = row.split(' ');
-        graph.push({source: a, target: b, weight: c});
-        vertices.add(a);
-        vertices.add(b);
+        try {
+            const [a, b, c] = row.split(' ');
+
+            // valiidating weight format 1.1;2.2
+            let format = /^([0-9]*[.]?[0-9]?);([0-9]*[.]?[0-9]?)$/;
+            if(format.test(c)) {
+                graph.push({source: a, target: b, weight: c});
+                vertices.add(a);
+                vertices.add(b);
+            } else {
+                console.log(`Invalid interval format: ${c}`);
+            }
+        } catch(e) {
+            console.log(`Invalid row format: ${row}`);   
+        }
     }
 
     vertices = Array.from(vertices, (x) => { return {title: x} });
@@ -40,7 +51,7 @@ function clamp(x, lo, hi) {
 function drawGraph() {
     let width = graphContainer.offsetWidth;
     let height = graphContainer.offsetHeight;
-    
+
     // reset canvas
     graphContainer.innerHTML = "";
 
