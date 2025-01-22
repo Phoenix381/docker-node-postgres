@@ -71,8 +71,9 @@ function drawGraph() {
 
     // Create a simulation with several forces.
     const simulation = d3.forceSimulation(nodes)
-      .force("link", d3.forceLink(links).id(d => d.title).distance(50))
-      .force("charge", d3.forceManyBody().strength(-300))
+      .force("link", d3.forceLink(links).id(d => d.title).distance(100))
+      .force("charge", d3.forceManyBody().strength(-500))
+      .force("collide", d3.forceCollide().radius(d => 20).iterations(2))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .on("tick", ticked);
 
@@ -82,6 +83,21 @@ function drawGraph() {
         .attr("width", width)
         .attr("height", height);
 
+    // Define the arrow marker
+    svg.append("defs").selectAll("marker")
+        .data(["arrow"])
+        .join("marker")
+        .attr("id", d => d)
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 15)
+        .attr("refY", 0)
+        .attr("markerWidth", 16)
+        .attr("markerHeight", 16)
+        .attr("orient", "auto")
+        .append("path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", "#999");
+
     // Add a line for each link, and a circle for each node.
     const link = svg.append("g")
         .attr("stroke", "#999")
@@ -89,6 +105,8 @@ function drawGraph() {
         .selectAll()
         .data(links)
         .join("line")
+        .attr("marker-end", "url(#arrow)"); // Add the arrow marker
+
 
     // Create the link labels
     const linkLabel = svg.append("g")
@@ -119,6 +137,7 @@ function drawGraph() {
     node.append("text")
         .attr("dy", 24)
         .attr("text-anchor", "middle")
+        .style("font-weight", "bold")
         .text(d => d.title);
 
 
