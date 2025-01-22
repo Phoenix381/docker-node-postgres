@@ -24,10 +24,10 @@ loadBtn.addEventListener('click', () => {
         try {
             const [a, b, c] = row.split(' ');
 
-            // valiidating weight format 1.1;2.2
+            // valiidating capacity format 1.1;2.2
             let format = /^([0-9]*[.]?[0-9]?);([0-9]*[.]?[0-9]?)$/;
             if(format.test(c)) {
-                graph.push({source: a, target: b, weight: c});
+                graph.push({source: a, target: b, capacity: c});
                 vertices.add(a);
                 vertices.add(b);
             } else {
@@ -97,7 +97,7 @@ function drawGraph() {
         .attr("y", d => d.source.y + (d.target.y - d.source.y) / 2)
         .attr("dy", 15)
         .attr("text-anchor", "middle")
-        .text(d => d.weight);
+        .text(d => d.capacity);
 
 
     // Create node groups.
