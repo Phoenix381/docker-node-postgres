@@ -19,6 +19,18 @@
             <div class="block w-50 d-flex flex-column gap-2">
                 <textarea id="graph-editor" placeholder="example: 1 2 1.1;2.2"></textarea>
 
+                <div class="d-flex flex-column justify-content-between gap-2">
+                    <div class="d-flex justify-content-between gap-2">
+                        <p>Source:</p>
+                        <input id="source" type="text" placeholder="1">
+                    </div>
+
+                    <div class="d-flex justify-content-between gap-2">
+                        <p>Target:</p>
+                        <input id="target" type="text" placeholder="2">
+                    </div>
+                </div>
+
                 <div class="d-flex justify-content-between gap-2">
                     <button id="load-button" class="btn btn-primary">Load</button>
                     <button id="run-button" class="btn btn-primary" disabled>Run</button>

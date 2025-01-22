@@ -6,6 +6,9 @@ const graphEditor = document.getElementById('graph-editor');
 const graphContainer = document.getElementById('graph-container');
 const resultsContainer = document.getElementById('results-container');
 
+const source = document.getElementById('source');
+const target = document.getElementById('target');
+
 let graph;
 let vertices;
 
@@ -160,11 +163,20 @@ function drawGraph() {
     }
 }
 
+let resp;
 // Run button
 runBtn.addEventListener('click', () => {
     console.log('sending data...');
     console.log(vertices);
     console.log(graph);
+
+    if(!source.value || !target.value) {
+        console.log('Please select source and target.');
+        return;
+    }
+        
+    let targets = { source: source.value, target: target.value };
+    console.log(targets);
 
     fetch('/api/run', {
         method: 'POST',
@@ -172,9 +184,14 @@ runBtn.addEventListener('click', () => {
             'Content-Type': 'application/json'
         },
         // body: JSON.stringify({ vertices: vertices, edges: graph })
-        body: JSON.stringify({ vertices: vertices, graph: graph})
+        body: JSON.stringify({ targets: targets, graph: graph})
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
+    .then((response) => {
+        return response.json()
+    })
+    .then((data) => {
+        // console.log(data)
+        resultsContainer.innerHTML = data[0].edmonds_carp_algorithm
+    })
     .catch(error => console.error('Error:', error));
 });
